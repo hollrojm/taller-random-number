@@ -1,18 +1,21 @@
 //reducers
 import { combineReducers } from 'redux'
 
+ const VIEWLOADING = "view-loading";
+ const VIEWLOADED ="view-loaded";
+ const RAMDOMRESULT = "random-result";
 
 function view(state = {
     loading: false
 }, action) {
     switch (action.type) {
         //TODO: refactorizar
-        case "view-loading": {
+        case VIEWLOADING: {
             return {
                 loading: true
             }
         }
-        case "view-loaded": {
+        case VIEWLOADED: {
             return {
                 loading: false
             }
@@ -25,7 +28,7 @@ function random(state = {
     result: {}
 }, action) {
     switch (action.type) {
-        case "random-result": {
+        case RAMDOMRESULT: {
             return { result: action.data }
         }
         default: return state

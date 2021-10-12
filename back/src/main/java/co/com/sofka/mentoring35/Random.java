@@ -40,8 +40,8 @@ public class Random {
         return orginalList;
     }
 
-    public void setOrginalList(String orginalList) {
-        this.orginalList = orginalList;
+    public void setOrginalList(String string) {
+        this.orginalList = string;
     }
 
     public void setRandomList(String randomList) {

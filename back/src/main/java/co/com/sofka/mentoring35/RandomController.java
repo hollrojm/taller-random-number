@@ -3,6 +3,7 @@ package co.com.sofka.mentoring35;
 import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,23 @@ public class RandomController {
         }).map(entity -> {
             var list = Stream.of(request.getList().split(","))
                 .map(p -> p.trim())
+                .collect(Collectors.toList());
+            Collections.shuffle(list);
+            var randomList = list.stream().collect(Collectors.joining(","));
+            entity.setRandomList(randomList);
+            return entity;
+        }).flatMap(randomRepository::save);
+    }
+
+    @PostMapping("/n")
+    public Mono<Random> post(@RequestBody RequestRamdomNumberDTO request) {
+        return Mono.just(new Random()).map(entity -> {
+            entity.setDate(new Date());
+            entity.setOrginalList(IntStream.range(request.getNumberOne(), request.getNumberTwo())
+            .mapToObj(String::valueOf).collect(Collectors.joining(",")));
+            return entity;
+        }).map(entity -> {
+            var list = Stream.of(entity.getOrginalList().split(","))
                 .collect(Collectors.toList());
             Collections.shuffle(list);
             var randomList = list.stream().collect(Collectors.joining(","));
